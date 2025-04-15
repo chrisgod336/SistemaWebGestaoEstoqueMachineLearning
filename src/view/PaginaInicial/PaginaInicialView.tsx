@@ -4,6 +4,7 @@ import { CSSProperties } from 'react';
 import BootstrapCard from '../../components/Card';
 
 const PaginaInicialView = () => {
+
   return (
     <div style={styles.container}>
       <Image src="/assets/images/image1.png" height={'60%'}/>
@@ -24,7 +25,7 @@ const PaginaInicialView = () => {
 const styles: { [key: string]: CSSProperties } = {
     container: {
       display: 'flex',
-      flexDirection: 'column', // agora tipado corretamente
+      flexDirection: 'column', 
       width: '100%',
       height: '100vh',
       alignItems: 'center',
@@ -34,7 +35,7 @@ const styles: { [key: string]: CSSProperties } = {
       justifyContent: 'space-between',
       gap: '16px',
       marginTop: '20px',
-      width: '80%' // só para não estourar a tela
+      width: '80%' 
     }
   };
   

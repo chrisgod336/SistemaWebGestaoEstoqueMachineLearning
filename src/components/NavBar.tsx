@@ -29,7 +29,7 @@ function BootstrapNavBar() {
 
           <Offcanvas.Body>
             <Nav className="flex-grow-1">
-              <Nav.Link href="#action1">Página inicial</Nav.Link>
+              <Nav.Link href="#">Página inicial</Nav.Link>
               <Nav.Link href="#action2">Fornecedores</Nav.Link>
               <Nav.Link href="#action3">Clientes</Nav.Link>
               <Nav.Link href="#action4">Produtos</Nav.Link>
