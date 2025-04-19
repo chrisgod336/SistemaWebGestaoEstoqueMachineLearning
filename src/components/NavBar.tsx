@@ -1,22 +1,39 @@
+import { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function BootstrapNavBar() {
+  const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+    handleClose();
+  };
+
   return (
     <Navbar expand="xll" bg="light" variant="light" className="mb-3">
       <Container fluid>
-
         <div className="d-flex align-items-center gap-2">
           <Navbar.Toggle 
             aria-controls="offcanvasNavbar-expand-xxl"
+            onClick={handleShow}
           />
-          <Navbar.Brand href="#" className="mb-0">Gestor de Estoque</Navbar.Brand>
+          <Navbar.Brand as={NavLink} to="/" className="mb-0">
+            Gestor de Estoque
+          </Navbar.Brand>
         </div>
 
         <Navbar.Offcanvas
+          show={show}
+          onHide={handleClose}
           id="offcanvasNavbar-expand-xxl"
           aria-labelledby="offcanvasNavbarLabel-expand-xxl"
           placement="start"
@@ -28,31 +45,37 @@ function BootstrapNavBar() {
           </Offcanvas.Header>
 
           <Offcanvas.Body>
-            <Nav className="flex-grow-1">
-              <Nav.Link href="#">Página inicial</Nav.Link>
-              <Nav.Link href="#action2">Fornecedores</Nav.Link>
-              <Nav.Link href="#action3">Clientes</Nav.Link>
-              <Nav.Link href="#action4">Produtos</Nav.Link>
-              <Nav.Link href="#action5">Estoque</Nav.Link>
-              <Nav.Link href="#action6">Vendas</Nav.Link>
-              <Nav.Link href="#action7">Compras</Nav.Link>
+            <Nav className="flex-grow-1 flex-column">
+              <Nav.Link onClick={() => handleNavigate('/')}>Página inicial</Nav.Link>
+              <Nav.Link onClick={() => handleNavigate('/fornecedores')}>Fornecedores</Nav.Link>
+              <Nav.Link onClick={() => handleNavigate('/clientes')}>Clientes</Nav.Link>
+              <Nav.Link onClick={() => handleNavigate('/produtos')}>Produtos</Nav.Link>
+              <Nav.Link onClick={() => handleNavigate('/estoques')}>Estoque</Nav.Link>
+              <Nav.Link onClick={() => handleNavigate('/vendas')}>Vendas</Nav.Link>
+              <Nav.Link onClick={() => handleNavigate('/compras')}>Compras</Nav.Link>
 
-              <NavDropdown 
-                title="Dashboards" 
-                id="offcanvasNavbarDropdown-expand-xxl"
-              >
-                <NavDropdown.Item href="#action9">Dashboard de previsão de demanda</NavDropdown.Item>
-                <NavDropdown.Item href="#action10">Dashboard de otimização de inventário</NavDropdown.Item>
-                <NavDropdown.Item href="#action11">Dashboard de reabastecimento</NavDropdown.Item>
+              <NavDropdown title="Dashboards" id="offcanvasNavbarDropdown-expand-xxl">
+                <NavDropdown.Item onClick={() => handleNavigate('/dashboard/previsao-demanda')}>
+                  Dashboard de previsão de demanda
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleNavigate('/dashboard/otimizacao-inventario')}>
+                  Dashboard de otimização de inventário
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleNavigate('/dashboard/reabastecimento')}>
+                  Dashboard de reabastecimento
+                </NavDropdown.Item>
               </NavDropdown>
 
-              <NavDropdown 
-                title="Relatório" 
-                id="offcanvasNavbarDropdown-expand-xxl"
-              >
-                <NavDropdown.Item href="#action12">Relatório de previsão de demanda</NavDropdown.Item>
-                <NavDropdown.Item href="#action13">Relatório de otimização de inventário</NavDropdown.Item>
-                <NavDropdown.Item href="#action14">Relatório de reabastecimento</NavDropdown.Item>
+              <NavDropdown title="Relatório" id="offcanvasNavbarDropdown-expand-xxl">
+                <NavDropdown.Item onClick={() => handleNavigate('/relatorio/previsao-demanda')}>
+                  Relatório de previsão de demanda
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleNavigate('/relatorio/otimizacao-inventario')}>
+                  Relatório de otimização de inventário
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => handleNavigate('/relatorio/reabastecimento')}>
+                  Relatório de reabastecimento
+                </NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Offcanvas.Body>

@@ -1,12 +1,14 @@
 import Image from 'react-bootstrap/Image';
 import { CSSProperties } from 'react';
 
+import Screen from '../../components/Screen';
 import BootstrapCard from '../../components/Card';
 
 const PaginaInicialView = () => {
 
   return (
-    <div style={styles.container}>
+    <Screen title='Página Inicial' backButton={false}>
+      <div style={styles.container}>
       <Image src="/assets/images/image1.png" height={'60%'}/>
       <div style={styles.line}>
         <BootstrapCard text='Dashboard de previsão de demanda'/>
@@ -19,6 +21,7 @@ const PaginaInicialView = () => {
         <BootstrapCard text='Relatório de reabastecimento'/>
       </div>
     </div>
+    </Screen>
   );
 };
 
