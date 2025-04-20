@@ -4,7 +4,8 @@ import BootstrapGrid from "../../components/Grid";
 const VendaItemConsultaView = () => {
     return (
         <Screen title="Itens da Venda" backButton={false}>
-            <BootstrapGrid newApp="/venda-itens/novo"/>
+            <div>Vendas Itens</div>
+            {/* <BootstrapGrid newApp="/venda-itens/novo"/> */}
         </Screen>
     );
 }
