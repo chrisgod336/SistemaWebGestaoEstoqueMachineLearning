@@ -7,9 +7,8 @@ type Props = {
 };
 
 function BootstrapGrid({ newApp, data}: Props) {
-  if (data.length === 0) return <p className="container mt-4">Nenhum dado para exibir.</p>;
 
-  const columns = Object.keys(data[0]);
+  const columns = data.length > 0?Object.keys(data[0]):[];
 
   return (
     <div className="container mt-4">
@@ -18,20 +17,23 @@ function BootstrapGrid({ newApp, data}: Props) {
           Novo
         </Button>
       </div>
-
+      
+      {columns.length === 0?
+      <p className="container mt-4">Nenhum registro encontrado.</p>
+      :
       <Table striped bordered hover responsive>
         <thead>
           <tr>
-            {columns.map((col) => (
+            {columns.length > 0 && columns.map((col) => (
               <th key={col}>{col.charAt(0).toUpperCase() + col.slice(1)}</th>
             ))}
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((row, idx) => (
+          {data.length > 0 && data.map((row, idx) => (
             <tr key={idx}>
-              {columns.map((col) => (
+              {columns.length > 0 && columns.map((col) => (
                 <td key={col}>{row[col]}</td>
               ))}
               <td>
@@ -43,6 +45,7 @@ function BootstrapGrid({ newApp, data}: Props) {
           ))}
         </tbody>
       </Table>
+      }
     </div>
   );
 }

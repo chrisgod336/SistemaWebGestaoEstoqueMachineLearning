@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row';
 
 interface FieldConfig {
   label: string;
-  type: 'text' | 'select' | 'email' | 'cpf_cnpj';
+  type: 'text' | 'select' | 'email' | 'cpf_cnpj' | 'number';
   value: any;
   required?: boolean;
   minLength?: number;
@@ -165,13 +165,21 @@ const BootstrapForm: React.FC<BootstrapFormProps> = ({
                   </Form.Select>
                 ) : (
                   <Form.Control
-                    type={field.type === 'email' ? 'email' : 'text'}
+                    type={
+                      field.type === 'email'
+                        ? 'email'
+                        : field.type === 'number'
+                        ? 'number'
+                        : 'text'
+                    }
                     name={name}
                     value={values[name]}
                     onChange={(e) => {
                       if (!field.readonly) {
-                        let value = e.target.value;
-                        if (field.mask) {
+                        let value: any = e.target.value;
+                        if (field.type === 'number') {
+                          value = e.target.value === '' ? '' : Number(e.target.value);
+                        } else if (field.mask) {
                           value = field.mask(value);
                         }
                         setFieldValue(name, value);
@@ -182,6 +190,7 @@ const BootstrapForm: React.FC<BootstrapFormProps> = ({
                     readOnly={field.readonly}
                     className={field.readonly ? 'bg-light text-muted' : ''}
                   />
+
                 )}
 
                 <Form.Control.Feedback type="invalid" tooltip>

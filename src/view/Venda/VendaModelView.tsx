@@ -3,6 +3,7 @@ import api from "../../services/api";
 import { maskDinheiro, maskData } from "../../utils/Mask";
 
 const arrayFormatt = (arr:any) => {
+    if(!arr || !arr.length) return {};
     const formattedArray = arr.map((item:any) => {
         return {
             "Código": item.id_venda,
@@ -20,7 +21,7 @@ const getAllVenda = async (setVendas:any) => {
     try {
         const response:any = await api.get('/venda/buscar');
 
-        if(response?.data?.result === 'success' && response?.data?.data){
+        if(response?.data?.result === 'success'){
             setVendas(arrayFormatt(response.data?.data));
         }else{
             console.error(response?.data?.message)

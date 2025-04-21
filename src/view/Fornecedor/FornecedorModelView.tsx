@@ -2,6 +2,7 @@ import api from "../../services/api";
 import { maskCpfCnpj, maskTelefone, maskDinheiro, unmaskCpfCnpj, unmaskTelefone, unmaskValor } from "../../utils/Mask";
 
 const arrayFormatt = (arr:any) => {
+    if(!arr || !arr.length) return {};
     const formattedArray = arr.map((item:any) => {
         return {
             "Código": item.id_fornecedor,
@@ -20,14 +21,14 @@ export const getAllFornecedor = async (setFornecedores:any) => {
     try {
         const response:any = await api.get('/fornecedor/buscar');
 
-        if(response?.data?.result === 'success' && response?.data?.data[0]){
+        if(response?.data?.result === 'success'){
             setFornecedores(arrayFormatt(response.data?.data));
         }else{
             console.error(response?.data?.message)
             throw new Error(response?.data?.message??'Erro ao tentar buscar os Fornecedores')
         }
     }catch(error:any){
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: error?.message??'Erro ao tentar buscar os Fornecedores'
@@ -43,17 +44,10 @@ export const createFornecedor = async (fornecedorData: any) => {
             tx_cpf_cnpj: unmaskCpfCnpj(fornecedorData.tx_cpf_cnpj),
             tx_email: fornecedorData.tx_email??'',
             tx_telefone: unmaskTelefone(fornecedorData.tx_telefone??''),
-            vr_frete: unmaskValor(fornecedorData.vr_frete),
-            nu_dias_previsao_inicial_entrega: 0,
-            nu_dias_previsao_final_entrega: 0,
-            tx_pais: '',
-            tx_uf: '',
-            tx_cidade: '',
-            tx_endereco: ''
+            vr_frete: unmaskValor(fornecedorData.vr_frete)
         }
 
         const response:any = await api.post('/fornecedor/criar', body);
-        console.log(response.data);
 
         if (response?.data?.result === 'success') {
             return {
@@ -67,7 +61,7 @@ export const createFornecedor = async (fornecedorData: any) => {
         }
 
     }catch(error:any){
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: error?.message??'Erro ao tentar criar Fornecedor'
@@ -82,13 +76,13 @@ export const getFornecedor = async (id_fornecedor: string) => {
             return response?.data?.data[0];
         }else{
             console.error(response?.data?.message)
-            throw new Error(response?.data?.message??'Erro ao tentar buscar os Fornecedor')
+            throw new Error(response?.data?.message??'Erro ao tentar buscar o Fornecedor')
         }
     }catch(error:any){
-        console.log(error);
+        console.error(error);
         return {
             success: false,
-            message: error?.message??'Erro ao tentar buscar os Fornecedor'
+            message: error?.message??'Erro ao tentar buscar o Fornecedor'
         }
     }
 }
@@ -106,7 +100,7 @@ export const deleteFornecedor = async (id_fornecedor: string) => {
             throw new Error(response?.data?.message??'Erro ao tentar deletar o Fornecedor')
         }
     }catch(error:any){
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: error?.message??'Erro ao tentar deletar o Fornecedor'
@@ -123,19 +117,10 @@ export const putFornecedor = async (fornecedorData: any) => {
             tx_cpf_cnpj: unmaskCpfCnpj(fornecedorData.tx_cpf_cnpj),
             tx_email: fornecedorData.tx_email??'',
             tx_telefone: unmaskTelefone(fornecedorData.tx_telefone??''),
-            vr_frete: Number(unmaskValor(fornecedorData.vr_frete)),
-            nu_dias_previsao_inicial_entrega: 0,
-            nu_dias_previsao_final_entrega: 0,
-            tx_pais: "",
-            tx_uf: "",
-            tx_cidade: "",
-            tx_endereco: ""
+            vr_frete: Number(unmaskValor(fornecedorData.vr_frete))
         }
 
-        console.log("BODY: ", body);
-
         const response:any = await api.put('/fornecedor/atualizar', body);
-        console.log(response.data);
 
         if (response?.data?.result === 'success') {
             return {
@@ -148,10 +133,39 @@ export const putFornecedor = async (fornecedorData: any) => {
         }
 
     }catch(error:any){
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: error?.message??'Erro ao tentar atualizar Fornecedor'
+        }
+    }
+}
+
+export const getListFornecedor = async () => {
+    try {
+        const response:any = await api.get('/fornecedor/buscar');
+
+        if(response?.data?.result === 'success'){
+
+            if(!response?.data?.data.length) return [];
+
+            const list = response.data.data.map((element:any) => {
+                return {
+                    label: `${element.id_fornecedor} - ${element.tx_razao_social}`,
+                    value: `${element.id_fornecedor}`
+                }
+            });
+
+            return list;
+        }else{
+            console.error(response?.data?.message)
+            throw new Error(response?.data?.message??'Erro ao tentar buscar os Fornecedores')
+        }
+    }catch(error:any){
+        console.error(error);
+        return {
+            success: false,
+            message: error?.message??'Erro ao tentar buscar os Fornecedores'
         }
     }
 }

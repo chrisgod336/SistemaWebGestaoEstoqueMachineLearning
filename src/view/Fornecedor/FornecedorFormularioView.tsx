@@ -41,7 +41,7 @@ const FornecedorFormularioView = () => {
             maxLength: 100
         },
         tx_cpf_cnpj: {
-            label: 'CPF/CNPJ',
+            label: 'CPF/CNPJ (obrigatório)',
             type: 'cpf_cnpj',
             value: '',
             required: true,
@@ -62,7 +62,7 @@ const FornecedorFormularioView = () => {
             type: 'text',
             value: '',
             required: false,
-            minLength: 10,
+            minLength: 15,
             maxLength: 15,
             mask: maskTelefone
         },
@@ -97,7 +97,6 @@ const FornecedorFormularioView = () => {
                     }
                   }
                   
-                console.log('NEW: ', newFornecedor);
                 setFornecedor(newFornecedor);
             }
         }
@@ -157,12 +156,11 @@ const FornecedorFormularioView = () => {
             onDelete={() => {
                 Swal.fire({
                     title: "Aviso!",
-                    text: 'Tem certeza que deseja excluir o Fonecedor?',
+                    text: 'Tem certeza que deseja excluir o Fornecedor?',
                     icon: "info",
                     draggable: true,
                     showCancelButton: true
                   }).then(async (value) => {
-                    console.log(value)
                     if(!value.isConfirmed){
                         return;
                     }
