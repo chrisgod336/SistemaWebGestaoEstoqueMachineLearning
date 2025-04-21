@@ -11,7 +11,7 @@ const ProdutoFormularioView = () => {
     })
 
     return (
-        <Screen title={produto?.id_produto?.value ? "Editar Produto" : "Cadastrar Produto"}>
+        <Screen title={produto?.id_produto?.value ? "Editar Produto" : "Cadastrar Produto"} backApplication="/produtos">
             ProdutoFormularioView
         </Screen>
     );

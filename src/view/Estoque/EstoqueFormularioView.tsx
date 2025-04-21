@@ -11,7 +11,7 @@ const EstoqueFormularioView = () => {
     })
 
     return (
-        <Screen title={estoque?.id_estoque?.value ? 'Editar Estoque' : 'Cadastrar Estoque'}>
+        <Screen title={estoque?.id_estoque?.value ? 'Editar Estoque' : 'Cadastrar Estoque'} backApplication="/estoques">
             <div>EstoqueFormularioView</div>
         </Screen>
     );

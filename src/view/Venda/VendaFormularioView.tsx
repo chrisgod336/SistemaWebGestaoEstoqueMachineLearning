@@ -11,7 +11,7 @@ const VendaFormularioView = () => {
     })
 
     return (
-        <Screen title={venda?.id_venda?.value ? "Editar Venda" : "Cadastrar Venda"}>
+        <Screen title={venda?.id_venda?.value ? "Editar Venda" : "Cadastrar Venda"} backApplication="/vendas">
             <div>VendaFormularioView</div>
         </Screen>
     );

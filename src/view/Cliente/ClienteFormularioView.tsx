@@ -11,7 +11,7 @@ const ClienteFormularioView = () => {
         });
 
     return(
-    <Screen title={cliente?.id_cliente?.value ? 'Editar Cliente' : 'Cadastrar Cliente'}>
+    <Screen title={cliente?.id_cliente?.value ? 'Editar Cliente' : 'Cadastrar Cliente'} backApplication="/clientes">
         <div>
             ClienteFormularioView
         </div>

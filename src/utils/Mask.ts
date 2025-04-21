@@ -35,6 +35,11 @@ export function maskCpfCnpj(valor: string): string {
   }
 
   export function maskDinheiro(valor: string | number): string {
+
+    if(valor.toString().length <= 0){
+      return ''
+    }
+
     const numero = typeof valor === 'string'
       ? parseFloat(valor.replace(/[^\d]/g, '')) / 100
       : valor;
@@ -66,6 +71,24 @@ export function maskCpfCnpj(valor: string): string {
   
     return partes.join('/');
   }
+  
+export const unmaskTelefone = (telefone: string): string => {
+    return telefone.replace(/\D/g, '');
+}
+
+export const unmaskCpfCnpj = (cpfCnpj: string): string => {
+  return cpfCnpj.replace(/\D/g, '');
+}
+
+export const unmaskValor = (valor: string): number => {
+  const numeroLimpo = valor
+    .replace(/[R$\s.]/g, '') 
+    .replace(',', '.');     
+
+  return parseFloat(numeroLimpo);
+}
+
+
   
   
   

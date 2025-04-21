@@ -11,7 +11,7 @@ const CompraFormularioView = () => {
     });
 
     return (
-        <Screen title={compra?.id_compra?.value ? 'Editar Compra' : 'Cadastrar Compra'}>
+        <Screen title={compra?.id_compra?.value ? 'Editar Compra' : 'Cadastrar Compra'} backApplication="/compras">
             <div>CompraFormularioView</div>
         </Screen>
     );

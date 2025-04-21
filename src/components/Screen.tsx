@@ -5,13 +5,19 @@ import { Button } from 'react-bootstrap';
 type ScreenProps = {
   title: string;
   backButton?: boolean;
+  backApplication?:string;
   children: ReactNode;
 };
 
-function Screen({ title, backButton=true, children }: ScreenProps) {
+function Screen({ title, backButton=true, backApplication='', children }: ScreenProps) {
   const navigate = useNavigate();
 
-  const handleBack = () => navigate(-1);
+  const handleBack = () => {
+    if(backApplication.length)
+      navigate(backApplication)
+    else
+      navigate(-1)
+  };
 
   return (
     <div className="container mt-4">
