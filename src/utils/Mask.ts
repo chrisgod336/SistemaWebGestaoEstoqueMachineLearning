@@ -51,26 +51,19 @@ export function maskCpfCnpj(valor: string): string {
   }
 
   export function maskData(valor: string): string {
-
-    if(!valor.length){
-      return '';
-    }
-
+    if (!valor) return '';
+  
     const apenasNumeros = valor.replace(/\D/g, '').slice(0, 8);
+    const tamanho = apenasNumeros.length;
   
-    const partes = [];
-    if (apenasNumeros.length >= 2) {
-      partes.push(apenasNumeros.slice(0, 2)); 
+    if (tamanho <= 2) {
+      return apenasNumeros;
+    } else if (tamanho <= 4) {
+      return `${apenasNumeros.slice(0, 2)}/${apenasNumeros.slice(2)}`;
+    } else {
+      return `${apenasNumeros.slice(0, 2)}/${apenasNumeros.slice(2, 4)}/${apenasNumeros.slice(4)}`;
     }
-    if (apenasNumeros.length >= 4) {
-      partes.push(apenasNumeros.slice(2, 4)); 
-    }
-    if (apenasNumeros.length > 4) {
-      partes.push(apenasNumeros.slice(4)); 
-    }
-  
-    return partes.join('/');
-  }
+  }  
   
 export const unmaskTelefone = (telefone: string): string => {
     return telefone.replace(/\D/g, '');
@@ -87,6 +80,12 @@ export const unmaskValor = (valor: string): number => {
 
   return parseFloat(numeroLimpo);
 }
+
+export function unmaskData(valor: string): string {
+  const unmask = valor.replace(/\D/g, '').slice(0, 8);
+  return `${unmask[4]}${unmask[5]}${unmask[6]}${unmask[7]}-${unmask[2]}${unmask[3]}-${unmask[0]}${unmask[1]}`;
+}
+
 
 
   

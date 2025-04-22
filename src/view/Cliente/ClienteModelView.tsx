@@ -140,3 +140,32 @@ export const putCliente = async (clienteData: any) => {
         }
     }
 }
+
+export const getListCliente = async () => {
+    try {
+        const response:any = await api.get('/cliente/buscar');
+
+        if(response?.data?.result === 'success'){
+
+            if(!response?.data?.data.length) return [];
+
+            const list = response.data.data.map((element:any) => {
+                return {
+                    label: `${element.id_cliente} - ${element.tx_nome}`,
+                    value: `${element.id_cliente}`
+                }
+            });
+
+            return list;
+        }else{
+            console.error(response?.data?.message)
+            throw new Error(response?.data?.message??'Erro ao tentar buscar os Clientes')
+        }
+    }catch(error:any){
+        console.error(error);
+        return {
+            success: false,
+            message: error?.message??'Erro ao tentar buscar os Clientes'
+        }
+    }
+}

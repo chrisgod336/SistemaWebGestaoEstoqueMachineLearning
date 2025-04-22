@@ -20,7 +20,6 @@ interface FieldConfig {
     readonly?: boolean;
   }
 
-
 const EstoqueFormularioView = () => {
 
     const navigate = useNavigate();

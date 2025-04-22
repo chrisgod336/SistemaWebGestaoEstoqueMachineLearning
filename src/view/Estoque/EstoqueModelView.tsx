@@ -45,8 +45,8 @@ export const createEstoque = async (estoqueData: any) => {
         }
 
         const body = {
-            id_produto: estoqueData.id_produto,
-            nu_quantidade: estoqueData.nu_quantidade
+            id_produto: Number(estoqueData.id_produto),
+            nu_quantidade: Number(estoqueData.nu_quantidade)
         }
 
         const response:any = await api.post('/estoque/criar', body);
