@@ -9,8 +9,7 @@ const arrayFormatt = (arr:any) => {
             "Razão Social": item.tx_razao_social,
             "CPF/CNPJ": maskCpfCnpj(item.tx_cpf_cnpj),
             "E-mail": item.tx_email,
-            "Telefone": maskTelefone(item.tx_telefone),
-            "Valor Frete": maskDinheiro(item.vr_frete)
+            "Telefone": maskTelefone(item.tx_telefone)
         }
     })
 
@@ -43,8 +42,7 @@ export const createFornecedor = async (fornecedorData: any) => {
             tx_razao_social: fornecedorData.tx_razao_social,
             tx_cpf_cnpj: unmaskCpfCnpj(fornecedorData.tx_cpf_cnpj),
             tx_email: fornecedorData.tx_email??'',
-            tx_telefone: unmaskTelefone(fornecedorData.tx_telefone??''),
-            vr_frete: unmaskValor(fornecedorData.vr_frete)
+            tx_telefone: unmaskTelefone(fornecedorData.tx_telefone??'')
         }
 
         const response:any = await api.post('/fornecedor/criar', body);
@@ -116,8 +114,7 @@ export const putFornecedor = async (fornecedorData: any) => {
             tx_razao_social: fornecedorData.tx_razao_social,
             tx_cpf_cnpj: unmaskCpfCnpj(fornecedorData.tx_cpf_cnpj),
             tx_email: fornecedorData.tx_email??'',
-            tx_telefone: unmaskTelefone(fornecedorData.tx_telefone??''),
-            vr_frete: Number(unmaskValor(fornecedorData.vr_frete))
+            tx_telefone: unmaskTelefone(fornecedorData.tx_telefone??'')
         }
 
         const response:any = await api.put('/fornecedor/atualizar', body);

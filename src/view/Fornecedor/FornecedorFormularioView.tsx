@@ -65,15 +65,6 @@ const FornecedorFormularioView = () => {
             minLength: 15,
             maxLength: 15,
             mask: maskTelefone
-        },
-        vr_frete: {
-            label: 'Valor do Frete (obrigatório)',
-            type: 'text',
-            value: maskDinheiro('0'),
-            required: true,
-            minLength: 1,
-            maxLength: 15,
-            mask: maskDinheiro
         }
     })
 
