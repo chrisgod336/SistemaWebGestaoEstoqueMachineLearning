@@ -1,11 +1,10 @@
-import Screen from "../../components/Screen";
 import BootstrapGrid from "../../components/Grid";
+import Screen from "../../components/Screen";
 
-const CompraItemConsultaView = () => {
+const CompraItemConsultaView = () => {      
     return (
-        <Screen title="Itens da Compra" backButton={false}>
-            <div>Compras Itens</div>
-            {/* <BootstrapGrid newApp="/compra-itens/novo"/> */}
+        <Screen backButton={false} title="Itens da Compra">
+            <BootstrapGrid newApp="/compra-itens/novo" data={[]}/>
         </Screen>
     );
 }

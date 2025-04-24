@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import BootstrapNavBar from './components/NavBar';
 import PaginaInicialView from './view/PaginaInicial/PaginaInicialView';
 
@@ -25,14 +25,19 @@ import VendaFormularioView from './view/Venda/VendaFormularioView';
 import VendaItemConsultaView from './view/Venda/VendaItemConsultaView';
 import VendaItemFormularioView from './view/Venda/VendaItemFormularioView';
 
-const App = () => {
+const AppContent = () => {
+  const location = useLocation();
+
+  // Rotas que não devem exibir o menu
+  const semMenu = location.pathname.startsWith('/venda-itens') || location.pathname.startsWith('/compra-itens');
+
   return (
-    <Router>
-      <BootstrapNavBar />
-      <div className="container mt-4">
+    <>
+      {!semMenu && <BootstrapNavBar />}
+      <div className={semMenu ? '' : 'container mt-4'}>
         <Routes>
           <Route path="/" element={<PaginaInicialView />} />
-          
+
           {/* Cliente */}
           <Route path="/clientes" element={<ClienteConsultaView />} />
           <Route path="/clientes/novo" element={<ClienteFormularioView />} />
@@ -63,20 +68,25 @@ const App = () => {
           <Route path="/produtos/novo" element={<ProdutoFormularioView />} />
           <Route path="/produtos/:id" element={<ProdutoFormularioView />} />
 
-           {/* Venda */}
-           <Route path="/vendas" element={<VendaConsultaView />} />
+          {/* Venda */}
+          <Route path="/vendas" element={<VendaConsultaView />} />
           <Route path="/vendas/novo" element={<VendaFormularioView />} />
-          <Route path="/vendas/:id" element={<VendaFormularioView />} />
+          <Route path="/vendas/:id/:id_item" element={<VendaFormularioView />} />
 
           {/* Venda Item */}
           <Route path="/venda-itens" element={<VendaItemConsultaView />} />
           <Route path="/venda-itens/novo" element={<VendaItemFormularioView />} />
-          <Route path="/venda-itens/:id" element={<VendaItemFormularioView />} />
-
+          <Route path="/venda-itens/:id/:id_item" element={<VendaItemFormularioView />} />
         </Routes>
       </div>
-    </Router>
+    </>
   );
 };
+
+const App = () => (
+  <Router>
+    <AppContent />
+  </Router>
+);
 
 export default App;

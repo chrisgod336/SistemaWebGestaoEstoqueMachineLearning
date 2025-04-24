@@ -26,6 +26,7 @@ interface BootstrapFormProps {
   onSave: (values: any) => void;
   onDelete: () => void;
   onNew: () => void;
+  iframe?: string | false;
 }
 
 const BootstrapForm: React.FC<BootstrapFormProps> = ({
@@ -35,6 +36,7 @@ const BootstrapForm: React.FC<BootstrapFormProps> = ({
   onSave,
   onDelete,
   onNew,
+  iframe=false
 }) => {
   const initialValues = useMemo(() => {
     return Object.keys(fields).reduce((acc, key) => {
@@ -199,7 +201,11 @@ const BootstrapForm: React.FC<BootstrapFormProps> = ({
               </Form.Group>
             ))}
           </Row>
-
+            {
+              (!isNew && iframe)?
+              <iframe src={iframe} width='100%' height='300x' style={{border: 'solid 1px gray', borderRadius: 10}}/>
+              :null
+            }
           {isNew ? (
             <Button type="submit" variant="success">
               Incluir

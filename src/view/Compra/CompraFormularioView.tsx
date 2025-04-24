@@ -21,7 +21,6 @@ interface FieldConfig {
     readonly?: boolean;
   }
 
-
 const CompraFormularioView = () => {
 
     const navigate = useNavigate();
@@ -117,6 +116,7 @@ const CompraFormularioView = () => {
                 isNew={compra?.id_compra?.value === '0'?true:false}
                 fields={compra}
                 onNew={() => {navigate('/compras/novo');window.location.reload()}}
+                iframe={'/compra-itens'}
                 onCreate={async (value) => {
                 const response = await createCompra(value);
                 if(response.success){
