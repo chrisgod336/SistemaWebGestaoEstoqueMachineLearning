@@ -164,7 +164,7 @@ export const getListEstoque = async () => {
 
             const list = response.data.data.map((element:any) => {
                 return {
-                    label: `${element.id_produto} - ${element.produto}`,
+                    label: `${element.produto}`,
                     value: `${element.id_estoque}`
                 }
             });

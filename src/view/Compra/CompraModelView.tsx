@@ -1,17 +1,26 @@
 import api from "../../services/api";
 
 import { maskDinheiro, maskData, unmaskValor, unmaskData } from "../../utils/Mask";
+import { getListProduto } from "../Produto/ProdutoModelView";
 
 //Compra
 
 const arrayFormatt = (arr:any) => {
     if(!arr || !arr.length) return {};
     const formattedArray = arr.map((item:any) => {
+
+        let dt_formatada = item.dt_compra;
+
+        if(dt_formatada){
+            dt_formatada = item.dt_compra.replaceAll('-', '');
+            dt_formatada = `${dt_formatada.slice(6,8)}/${dt_formatada.slice(4,6)}/${dt_formatada.slice(0,4)}`;
+        }
+
         return {
             "Código": item.id_compra,
             "Fornecedor": item.fornecedor,
-            "Data Compra": maskData(item.dt_compra),
-            "Valor Compra": maskDinheiro(item.vr_total_compra)
+            "Data Compra": maskData(dt_formatada),
+            "Valor Compra": maskDinheiro(item.vr_compra)
         }
     })
 
@@ -23,6 +32,9 @@ export const getAllCompra = async (setCompras:any) => {
         const response:any = await api.get('/compra/buscar');
 
         if(response?.data?.result === 'success'){
+
+            console.log(response.data.data)
+
             setCompras(arrayFormatt(response.data?.data));
         }else{
             console.error(response?.data?.message)
@@ -153,9 +165,12 @@ export const putCompra = async (compraData: any) => {
 const arrayFormattItem = (arr:any) => {
     if(!arr || !arr.length) return {};
     const formattedArray = arr.map((item:any) => {
+
+        console.log(item)
+
         return {
             "Código": item.id_compra_produto,
-            "Produto": item.estoque,
+            "Produto": item.produto,
             "Quantidade": item.nu_quantidade,
             "Valor Total": maskDinheiro(item.vr_total)
         }
@@ -164,12 +179,31 @@ const arrayFormattItem = (arr:any) => {
     return formattedArray;
 }
 
-export const getAllItemCompra = async (setCompraItens:any) => {
+export const getAllItemCompra = async (setCompraItens:any, id_compra:string) => {
     try {
-        const response:any = await api.get('/compraProduto/buscar');
+        console.log(`/compraProduto/buscar?id_compra=${id_compra}`)
+        const response:any = await api.get(`/compraProduto/buscar?id_compra=${id_compra}`);
 
         if(response?.data?.result === 'success'){
-            setCompraItens(arrayFormatt(response.data?.data));
+
+            const res = await Promise.all(response?.data?.data?.map(async (element:any) => {
+                const produtos:any = await getListProduto();
+            
+                const id_produto = element.id_produto;
+            
+                const produto = produtos.find((e:any) => e.value == id_produto)?.label ?? 'Produto não encontrado';
+            
+                return {
+                    ...element,
+                    produto: produto
+                };
+            }));
+            
+            setCompraItens(arrayFormattItem(res));
+
+            setCompraItens(arrayFormattItem(res));
+
+
         }else{
             console.error(response?.data?.message)
             throw new Error(response?.data?.message??'Erro ao tentar buscar os Itens das Compras')
@@ -191,15 +225,17 @@ export const createItemCompra = async (compraData: any) => {
             id_estoque: Number(compraData.id_estoque),
             id_produto: Number(compraData.id_produto),
             nu_quantidade: Number(compraData.nu_quantidade),
-            vr_total: maskDinheiro(compraData.vr_total)
+            vr_total: unmaskValor(compraData.vr_total)
         }
+
+        console.log(body)
 
         const response:any = await api.post('/compraProduto/criar', body);
 
         if (response?.data?.result === 'success') {
             return {
                 success: true,
-                message: 'Item daCompra cadastrado com sucesso.',
+                message: 'Item da Compra cadastrado com sucesso.',
                 id: response.data.data.id_compra_produto
             }
         }else{

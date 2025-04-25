@@ -8,6 +8,7 @@ import BootstrapForm from "../../components/Form";
 import { createItemCompra, getItemCompra, deleteItemCompra, putItemCompra } from "./CompraModelView";
 import { getListEstoque } from "../Estoque/EstoqueModelView";
 import { maskDinheiro, unmaskValor } from "../../utils/Mask";
+import { getProduto } from "../Produto/ProdutoModelView";
 
 interface FieldConfig {
     label: string;
@@ -25,15 +26,16 @@ const CompraItemFormularioView = () => {
 
     const navigate = useNavigate();
     const { id, id_item } = useParams<{ id: string, id_item: string }>();
+    console.log("id: ", id);
 
-    const [compra_produto, setItemCompra] = useState<Record<string, FieldConfig>>({
+    const [compra_produto, setCompraProduto] = useState<Record<string, FieldConfig>>({
         id_compra_produto: {
             label: 'Código',
             type: 'text',
-            value: id??'0',
+            value: id_item??'0',
             readonly: true
         },
-        id_estoques: {
+        id_estoque: {
             label: 'Produtos (obrigatório)',
             type: 'select',
             value: '',
@@ -44,8 +46,7 @@ const CompraItemFormularioView = () => {
             label: 'Quantidade',
             type: 'number',
             value: 1,
-            required: true,
-            mask: (value) => {return value<=1?1:value} 
+            required: true
         },
         vr_total: {
             label: 'Valor Total',
@@ -70,7 +71,7 @@ const CompraItemFormularioView = () => {
             }
 
             if (id && id_item) {
-                const data = await getItemCompra(id.toString(), id_item.toString());
+                const data = await getItemCompra(id?.toString(), id_item?.toString());
     
                 const newCompra = { ...compra_produto };
     
@@ -88,14 +89,14 @@ const CompraItemFormularioView = () => {
                     }
                     }
                     
-                setItemCompra(newCompra);
+                setCompraProduto(newCompra);
             }else{
                 const newItemCompra = { ...compra_produto , id_estoque: {
                     ...compra_produto.id_estoque,
                     options: estoques
                 }};
 
-                setItemCompra(newItemCompra);
+                setCompraProduto(newItemCompra);
             }
         }
     
@@ -103,12 +104,17 @@ const CompraItemFormularioView = () => {
     }, []);
 
     return (
-        <Screen title={compra_produto?.id_compra_produto?.value !== '0' ? "Editar Item da Compra" : "Cadastrar Item da Compra"} backApplication="/compra-itens">
+        <Screen title={compra_produto?.id_compra_produto?.value !== '0' ? "Editar Item da Compra" : "Cadastrar Item da Compra"} backApplication={`/compra-itens/${id}`}>
             <BootstrapForm 
                 isNew={compra_produto?.id_compra_produto?.value === '0'?true:false}
                 fields={compra_produto}
-                onNew={() => {navigate('/compraProdutos/novo');window.location.reload()}}
+                onNew={() => {navigate('/compra-itens/novo');window.location.reload()}}
                 onCreate={async (value) => {
+                value.id_compra = id;
+                compra_produto.id_estoque.options?.forEach((element) => {
+                    if(element.value == value.id_estoque)
+                        value.id_produto = element.label.split(' - ')[0]; 
+                })
                 const response = await createItemCompra(value);
                 if(response.success){
 
@@ -120,8 +126,7 @@ const CompraItemFormularioView = () => {
                         icon: "success",
                         draggable: true
                       }).then(() => {
-                        navigate(`/compra-itens/${newId}`)
-                        window.location.reload()
+                        window.parent.location.reload()
                       })
                 }else{
                     Swal.fire({
@@ -141,6 +146,8 @@ const CompraItemFormularioView = () => {
                         text: response.message,
                         icon: "success",
                         draggable: true
+                      }).then(() => {
+                        window.parent.location.reload()
                       })
                 }else{
                     Swal.fire({
@@ -172,7 +179,7 @@ const CompraItemFormularioView = () => {
                             icon: "success",
                             draggable: true
                           }).then(() => {
-                            navigate('/compra-itens');
+                            window.parent.location.reload()
                           })
                     }else{
                         Swal.fire({

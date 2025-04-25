@@ -181,6 +181,13 @@ const BootstrapForm: React.FC<BootstrapFormProps> = ({
                         let value: any = e.target.value;
                         if (field.type === 'number') {
                           value = e.target.value === '' ? '' : Number(e.target.value);
+                          if(value==0){
+                            value=1;
+                          }
+                          if(field.mask){
+                            field.mask(value);
+                          }
+                          
                         } else if (field.mask) {
                           value = field.mask(value);
                         }

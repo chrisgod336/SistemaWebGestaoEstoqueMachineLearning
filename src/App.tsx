@@ -49,9 +49,9 @@ const AppContent = () => {
           <Route path="/compras/:id" element={<CompraFormularioView />} />
 
           {/* Compra Item */}
-          <Route path="/compra-itens" element={<CompraItemConsultaView />} />
-          <Route path="/compra-itens/novo" element={<CompraItemFormularioView />} />
-          <Route path="/compra-itens/:id" element={<CompraItemFormularioView />} />
+          <Route path="/compra-itens/:id" element={<CompraItemConsultaView />} />
+          <Route path="/compra-itens/novo/:id" element={<CompraItemFormularioView />} />
+          <Route path="/compra-itens/:id/:id_item" element={<CompraItemFormularioView />} />
 
           {/* Estoque */}
           <Route path="/estoques" element={<EstoqueConsultaView />} />
@@ -74,8 +74,8 @@ const AppContent = () => {
           <Route path="/vendas/:id/:id_item" element={<VendaFormularioView />} />
 
           {/* Venda Item */}
-          <Route path="/venda-itens" element={<VendaItemConsultaView />} />
-          <Route path="/venda-itens/novo" element={<VendaItemFormularioView />} />
+          <Route path="/venda-itens/:id" element={<VendaItemConsultaView />} />
+          <Route path="/venda-itens/novo/:id" element={<VendaItemFormularioView />} />
           <Route path="/venda-itens/:id/:id_item" element={<VendaItemFormularioView />} />
         </Routes>
       </div>
