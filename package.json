@@ -11,6 +11,7 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.2",
+    "apexcharts": "^4.7.0",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.5",
     "formik": "^2.4.6",
