@@ -37,7 +37,7 @@ function BootstrapGrid({ newApp, data}: Props) {
                 <td key={col}>{row[col]}</td>
               ))}
               <td>
-                <Button variant="primary" onClick={() => window.location.href = newApp.replace('novo', row["Código"])}>
+                <Button variant="primary" onClick={() => window.location.href = newApp.replace('/novo', '')+'/'+row["Código"]}>
                   Editar
                 </Button>
               </td>

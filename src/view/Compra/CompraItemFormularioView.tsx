@@ -26,7 +26,6 @@ const CompraItemFormularioView = () => {
 
     const navigate = useNavigate();
     const { id, id_item } = useParams<{ id: string, id_item: string }>();
-    console.log("id: ", id);
 
     const [compra_produto, setCompraProduto] = useState<Record<string, FieldConfig>>({
         id_compra_produto: {
@@ -72,6 +71,8 @@ const CompraItemFormularioView = () => {
 
             if (id && id_item) {
                 const data = await getItemCompra(id?.toString(), id_item?.toString());
+
+                console.log(data)
     
                 const newCompra = { ...compra_produto };
     
@@ -79,7 +80,9 @@ const CompraItemFormularioView = () => {
                     if (Object.prototype.hasOwnProperty.call(newCompra, key)) {
                         const field = newCompra[key] as FieldConfig;
                     
-                        const rawValue = data?.[key];
+                        const rawValue = data?.data?.[0][key];
+
+                        console.log(rawValue)
                     
                         newCompra[key] = {
                         ...field,
@@ -170,7 +173,7 @@ const CompraItemFormularioView = () => {
                         return;
                     }
 
-                    const response = await deleteItemCompra(id?id:'0', compra_produto.id_compra_produto.value);
+                    const response = await deleteItemCompra(id?id:'0', compra_produto?.id_compra_produto.value);
 
                     if(response.success){
                         Swal.fire({
