@@ -116,7 +116,7 @@ const VendaFormularioView = () => {
                 isNew={venda?.id_venda?.value === '0'?true:false}
                 fields={venda}
                 onNew={() => {navigate('/vendas/novo');window.location.reload()}}
-                iframe={'/venda-itens'}
+                iframe={`/venda-itens/${id}`}
                 onCreate={async (value) => {
                 const response = await createVenda(value);
                 if(response.success){

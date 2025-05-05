@@ -1,11 +1,23 @@
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from "react";
+
 import Screen from "../../components/Screen";
 import BootstrapGrid from "../../components/Grid";
+import { getAllItemVenda } from "./VendaModelView";
 
 const VendaItemConsultaView = () => {
+
+    const [itemVenda, setItemVenda] = useState([]);
+        
+    const { id } = useParams<{ id: string }>();
+
+    useEffect(() => {
+        getAllItemVenda(setItemVenda, id?id:'0');
+    },[])
+
     return (
-        <Screen title="Itens da Venda" backButton={false}>
-            <div>Vendas Itens</div>
-            {/* <BootstrapGrid newApp="/venda-itens/novo"/> */}
+        <Screen backButton={false} title="Itens da Venda">
+            <BootstrapGrid newApp={`/venda-itens/novo/${id}`} data={itemVenda}/>
         </Screen>
     );
 }

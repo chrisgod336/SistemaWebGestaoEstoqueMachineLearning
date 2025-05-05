@@ -28,7 +28,6 @@ import VendaItemFormularioView from './view/Venda/VendaItemFormularioView';
 const AppContent = () => {
   const location = useLocation();
 
-  // Rotas que não devem exibir o menu
   const semMenu = location.pathname.startsWith('/venda-itens') || location.pathname.startsWith('/compra-itens');
 
   return (
@@ -71,7 +70,7 @@ const AppContent = () => {
           {/* Venda */}
           <Route path="/vendas" element={<VendaConsultaView />} />
           <Route path="/vendas/novo" element={<VendaFormularioView />} />
-          <Route path="/vendas/:id/:id_item" element={<VendaFormularioView />} />
+          <Route path="/vendas/:id" element={<VendaFormularioView />} />
 
           {/* Venda Item */}
           <Route path="/venda-itens/:id" element={<VendaItemConsultaView />} />
