@@ -35,7 +35,7 @@ export const getAllVenda = async (setVendas:any) => {
             throw new Error(response?.data?.message??'Erro ao tentar buscar os Vendas')
         }
     }catch(error:any){
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: error?.message??'Erro ao tentar buscar os Vendas'
@@ -132,8 +132,6 @@ export const putVenda = async (vendaData: any) => {
             dt_venda: unmaskData(vendaData.dt_venda)
         }
 
-        console.log(body);
-
         const response:any = await api.put('/venda/atualizar', body);
 
         if (response?.data?.result === 'success') {
@@ -161,8 +159,6 @@ const arrayFormattItem = (arr:any) => {
     if(!arr || !arr.length) return {};
     const formattedArray = arr.map((item:any) => {
 
-        console.log(item)
-
         return {
             "Código": item.id_venda_produto,
             "Produto": item.produto,
@@ -176,7 +172,6 @@ const arrayFormattItem = (arr:any) => {
 
 export const getAllItemVenda = async (setVendaItens:any, id_venda:string) => {
     try {
-        console.log(`/vendaProduto/buscar?id_venda=${id_venda}`)
         const response:any = await api.get(`/vendaProduto/buscar?id_venda=${id_venda}`);
 
         if(response?.data?.result === 'success'){
@@ -193,9 +188,6 @@ export const getAllItemVenda = async (setVendaItens:any, id_venda:string) => {
                     produto: produto
                 };
             }));
-
-
-            console.log(arrayFormattItem(res))
             
             setVendaItens(arrayFormattItem(res));
 
@@ -207,7 +199,7 @@ export const getAllItemVenda = async (setVendaItens:any, id_venda:string) => {
             throw new Error(response?.data?.message??'Erro ao tentar buscar os Itens das Vendas')
         }
     }catch(error:any){
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: error?.message??'Erro ao tentar buscar os Itens das Vendas'
@@ -226,11 +218,7 @@ export const createItemVenda = async (vendaData: any) => {
             vr_total: unmaskValor(vendaData.vr_total)
         }
 
-        console.log(body)
-
         const response:any = await api.post('/vendaProduto/criar', body);
-
-        console.log(response)
 
         if (response?.data?.result === 'success') {
             return {
@@ -273,9 +261,7 @@ export const getItemVenda = async (id_venda: string, id_venda_produto: string) =
 
 export const deleteItemVenda = async (id_venda: string, id_venda_produto:string) => {
 
-    console.log("id_venda: ", id_venda, "id_venda_item: ", id_venda_produto)
     try {
-        console.log(`/vendaProduto/deletar?id_venda=${id_venda}&id_venda_produto=${id_venda_produto}`)
         const response:any = await api.delete(`/vendaProduto/deletar?id_venda=${id_venda}&id_venda_produto=${id_venda_produto}`);
         if(response?.data?.result === 'success'){
             return {
@@ -297,8 +283,6 @@ export const deleteItemVenda = async (id_venda: string, id_venda_produto:string)
 
 export const putItemVenda = async (vendaData: any) => {
     try {
-
-        console.log(vendaData);
 
         const body = {
             id_venda: Number(vendaData.id_venda),
