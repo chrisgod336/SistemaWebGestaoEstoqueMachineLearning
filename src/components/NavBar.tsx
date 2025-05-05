@@ -54,7 +54,7 @@ function BootstrapNavBar() {
               <Nav.Link onClick={() => handleNavigate('/vendas')}>Vendas</Nav.Link>
               <Nav.Link onClick={() => handleNavigate('/compras')}>Compras</Nav.Link>
 
-              <NavDropdown title="Dashboards" id="offcanvasNavbarDropdown-expand-xxl">
+              {/* <NavDropdown title="Dashboards" id="offcanvasNavbarDropdown-expand-xxl">
                 <NavDropdown.Item onClick={() => handleNavigate('/dashboard/previsao-demanda')}>
                   Dashboard de previsão de demanda
                 </NavDropdown.Item>
@@ -76,7 +76,7 @@ function BootstrapNavBar() {
                 <NavDropdown.Item onClick={() => handleNavigate('/relatorio/reabastecimento')}>
                   Relatório de reabastecimento
                 </NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

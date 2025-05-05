@@ -12,7 +12,7 @@ import { getProduto } from "../Produto/ProdutoModelView";
 
 interface FieldConfig {
     label: string;
-    type: 'text' | 'select' | 'email' | 'cpf_cnpj' | 'number'; 
+    type: 'text' | 'select' | 'email' | 'cpf_cnpj' | 'number' | 'none'; 
     value: any;
     required?: boolean;
     minLength?: number;
@@ -27,7 +27,15 @@ const CompraItemFormularioView = () => {
     const navigate = useNavigate();
     const { id, id_item } = useParams<{ id: string, id_item: string }>();
 
+    console.log("id: ", id);
+    console.log("id_item: ", id_item);
+
     const [compra_produto, setCompraProduto] = useState<Record<string, FieldConfig>>({
+        id_compra: {
+            label: '',
+            type: 'none',
+            value: id??'0'
+        },
         id_compra_produto: {
             label: 'Código',
             type: 'text',
@@ -60,6 +68,7 @@ const CompraItemFormularioView = () => {
         async function fetchItemCompra() {
 
             const estoques:any = await getListEstoque();
+            console.log(estoques);
 
             if(!estoques || !estoques.length){
                 Swal.fire({
@@ -70,28 +79,33 @@ const CompraItemFormularioView = () => {
             }
 
             if (id && id_item) {
-                const data = await getItemCompra(id?.toString(), id_item?.toString());
+                const res = await getItemCompra(id?.toString(), id_item?.toString());
 
-                console.log(data)
-    
-                const newCompra = { ...compra_produto };
-    
-                for (const key in newCompra) {
-                    if (Object.prototype.hasOwnProperty.call(newCompra, key)) {
-                        const field = newCompra[key] as FieldConfig;
-                    
-                        const rawValue = data?.data?.[0][key];
+                console.log(res?.data?.data[0])
 
-                        console.log(rawValue)
-                    
-                        newCompra[key] = {
-                        ...field,
-                        value: field.mask ? field.mask(rawValue) : rawValue ?? field.value,
-                        options: key === 'id_estoque' ? estoques : (field.options||[])
-                        };
+                const data = res?.data?.data[0];
+    
+                let newCompra = { ...compra_produto };
+
+                console.log("ID ESTOQUE: ", data?.id_estoque);
+
+                newCompra = { 
+                    ...compra_produto , 
+                    id_estoque: {
+                    ...compra_produto.id_estoque,
+                    options: estoques,
+                    value: data?.id_estoque
+                    },
+                    nu_quantidade: {
+                        ...compra_produto.nu_quantidade,
+                        value: data?.nu_quantidade
+                    },
+                    vr_total: {
+                        ...compra_produto.vr_total,
+                        value: maskDinheiro(data?.vr_total)
                     }
-                    }
-                    
+                };
+                console.log(newCompra)
                 setCompraProduto(newCompra);
             }else{
                 const newItemCompra = { ...compra_produto , id_estoque: {
@@ -111,7 +125,7 @@ const CompraItemFormularioView = () => {
             <BootstrapForm 
                 isNew={compra_produto?.id_compra_produto?.value === '0'?true:false}
                 fields={compra_produto}
-                onNew={() => {navigate('/compra-itens/novo');window.location.reload()}}
+                onNew={() => {navigate(`/compra-itens/novo/${id}`);window.location.reload()}}
                 onCreate={async (value) => {
                 value.id_compra = id;
                 compra_produto.id_estoque.options?.forEach((element) => {
@@ -120,8 +134,6 @@ const CompraItemFormularioView = () => {
                 })
                 const response = await createItemCompra(value);
                 if(response.success){
-
-                    const newId = response.id;
 
                     Swal.fire({
                         title: "Sucesso!",
@@ -141,6 +153,9 @@ const CompraItemFormularioView = () => {
                 }
             }}
             onSave={async (value) => {
+                console.log(compra_produto.id_estoque)
+                value.id_produto = compra_produto.id_estoque.options?.filter((opt) => {return opt.value == value.id_estoque})[0].label.split(' - ')[0];
+
                 const response = await putItemCompra(value);
                 if(response.success){
 

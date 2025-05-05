@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row';
 
 interface FieldConfig {
   label: string;
-  type: 'text' | 'select' | 'email' | 'cpf_cnpj' | 'number';
+  type: 'text' | 'select' | 'email' | 'cpf_cnpj' | 'number' | 'none';
   value: any;
   required?: boolean;
   minLength?: number;
@@ -127,6 +127,7 @@ const BootstrapForm: React.FC<BootstrapFormProps> = ({
     return result === parseInt(digits.charAt(1));
   };
   
+  const filteredFields = Object.entries(fields).filter(([_, field]) => field.type !== 'none');
 
   return (
     <Formik
@@ -140,7 +141,7 @@ const BootstrapForm: React.FC<BootstrapFormProps> = ({
       {({ handleSubmit, handleChange, values, errors, setFieldValue }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Row className="mb-3">
-            {Object.entries(fields).map(([name, field]) => (
+            {filteredFields.map(([name, field]) => (
               <Form.Group
                 as={Col}
                 md="6"
@@ -165,7 +166,8 @@ const BootstrapForm: React.FC<BootstrapFormProps> = ({
                       </option>
                     ))}
                   </Form.Select>
-                ) : (
+                ) : 
+                (
                   <Form.Control
                     type={
                       field.type === 'email'

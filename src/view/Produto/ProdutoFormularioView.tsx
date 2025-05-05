@@ -11,7 +11,7 @@ import { getListFornecedor } from "../Fornecedor/FornecedorModelView";
 
 interface FieldConfig {
     label: string;
-    type: 'text' | 'select' | 'email' | 'cpf_cnpj'; 
+    type: 'text' | 'select' | 'email' | 'cpf_cnpj' | 'none'; 
     value: any;
     required?: boolean;
     minLength?: number;
@@ -34,11 +34,9 @@ const ProdutoFormularioView = () => {
             readonly: true
         },
         id_fornecedor: {
-            label: 'Fornecedor (obrigatório)',
-            type: 'select',
-            value: '',
-            options: [],
-            required: true
+            label: '',
+            type: 'none',
+            value: '1'
         },
         tx_nome: {
             label: 'Nome (obrigatório)',

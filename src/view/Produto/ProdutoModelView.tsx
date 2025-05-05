@@ -6,7 +6,7 @@ const arrayFormatt = (arr:any) => {
     const formattedArray = arr.map((item:any) => {
         return {
             "Código": item.id_produto,
-            "Fonecedor": item.fornecedor,
+            //"Fonecedor": item.fornecedor,
             "Descrição": item.tx_nome,
             "Marca": item.tx_marca,
             "Valor de Compra": maskDinheiro(item.vr_preco_compra),

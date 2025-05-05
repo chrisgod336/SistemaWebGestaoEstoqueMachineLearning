@@ -198,6 +198,9 @@ export const getAllItemCompra = async (setCompraItens:any, id_compra:string) => 
                     produto: produto
                 };
             }));
+
+
+            console.log(arrayFormattItem(res))
             
             setCompraItens(arrayFormattItem(res));
 
@@ -273,7 +276,7 @@ export const getItemCompra = async (id_compra: string, id_compra_produto: string
 
 export const deleteItemCompra = async (id_compra: string, id_compra_produto:string) => {
     try {
-        const response:any = await api.delete(`/compra/deletar?id_compra=${id_compra}&id_compra_produto=${id_compra_produto}`);
+        const response:any = await api.delete(`/compraProduto/deletar?id_compra=${id_compra}&id_compra_produto=${id_compra_produto}`);
         if(response?.data?.result === 'success'){
             return {
                 success: true,
@@ -295,18 +298,18 @@ export const deleteItemCompra = async (id_compra: string, id_compra_produto:stri
 export const putItemCompra = async (compraData: any) => {
     try {
 
+        console.log(compraData);
+
         const body = {
             id_compra: Number(compraData.id_compra),
             id_compra_produto: Number(compraData.id_compra_produto),
             id_estoque: Number(compraData.id_estoque),
             id_produto: Number(compraData.id_produto),
             nu_quantidade: Number(compraData.nu_quantidade),
-            vr_total: maskDinheiro(compraData.vr_total)
+            vr_total: unmaskValor(compraData.vr_total)
         }
 
-        console.log(body);
-
-        const response:any = await api.put('/compra/atualizar', body);
+        const response:any = await api.put('/compraProduto/atualizar', body);
 
         if (response?.data?.result === 'success') {
             return {
