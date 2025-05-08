@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   newApp: string;
@@ -14,7 +16,8 @@ function BootstrapGrid({ newApp, data}: Props) {
     <div className="container mt-4">
       <div className="d-flex align-items-center justify-content-between mb-4">
         <Button variant="success" onClick={() => window.location.href = newApp}>
-          Novo
+          <FontAwesomeIcon icon={faPlus} color='#ffff'/>
+          {'  Novo'}
         </Button>
       </div>
       
@@ -38,7 +41,8 @@ function BootstrapGrid({ newApp, data}: Props) {
               ))}
               <td>
                 <Button variant="primary" onClick={() => window.location.href = newApp.replace('/novo', '')+'/'+row["Código"]}>
-                  Editar
+                  <FontAwesomeIcon icon={faEdit} color='#ffff'/>
+                  {'  Editar'}
                 </Button>
               </td>
             </tr>

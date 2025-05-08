@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faFloppyDisk, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface FieldConfig {
   label: string;
@@ -222,13 +224,16 @@ const BootstrapForm: React.FC<BootstrapFormProps> = ({
           ) : (
             <div className="d-flex gap-2">
               <Button type="submit" variant="primary">
-                Salvar
+                <FontAwesomeIcon icon={faFloppyDisk} color='#ffff/'/>
+                {' Salvar'}
               </Button>
               <Button variant="danger" onClick={onDelete}>
-                Excluir
+                <FontAwesomeIcon icon={faTrash} color='#ffff'/>
+                {'  Excluir'}
               </Button>
               <Button variant="success" onClick={onNew}>
-                Novo
+                <FontAwesomeIcon icon={faPlus} color='#ffff'/> 
+                {'  Novo'}
               </Button>
             </div>
           )}
