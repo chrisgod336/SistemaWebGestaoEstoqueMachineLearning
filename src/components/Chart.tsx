@@ -85,7 +85,7 @@ export const BarChart = ({
       },
       dataLabels: { enabled: false },
       series: [{
-        name: 'Valores',
+        name: 'Total',
         data: data.map((item, index) => ({
           ...item,
           color: colorPalette[index % colorPalette.length] 
