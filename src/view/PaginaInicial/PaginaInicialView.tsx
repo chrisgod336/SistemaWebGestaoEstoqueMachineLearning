@@ -5,6 +5,24 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotate } from '@fortawesome/free-solid-svg-icons';
 
+// Função para formatar números com 2 casas decimais
+const formatDecimal = (value: number) => parseFloat(value.toFixed(2));
+
+// Dados de exemplo para o LineChart (10 séries com 6 pontos cada)
+const lineChartData = {
+  series: Array.from({ length: 10 }, (_, i) => ({
+    name: `Produto ${i + 1}`,
+    data: Array.from({ length: 6 }, () => formatDecimal(Math.random() * 100 + 20))
+  })),
+  categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun']
+};
+
+// Dados de exemplo para o BarChart (10 barras)
+const barChartData = Array.from({ length: 10 }, (_, i) => ({
+  x: `Produto ${i + 1}`,
+  y: formatDecimal(Math.random() * 100 + 30)
+}));
+
 const PaginaInicialView = () => {
   return (
     <div style={styles.container}>
@@ -19,21 +37,37 @@ const PaginaInicialView = () => {
         <div style={styles.line}>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Quantidade por Produto</h3>
-            <LineChart />
+            <LineChart 
+              series={lineChartData.series} 
+              categories={lineChartData.categories} 
+            />
           </div>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
           <h3 className="mb-0">Quantidade Total</h3>
-            <BarChart />
+            <BarChart 
+              data={barChartData} 
+            />
           </div>
         </div>
         <div style={styles.line}>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Valor por Produto</h3>
-            <LineChart />
+            <LineChart 
+              series={lineChartData.series.map(s => ({
+                ...s,
+                data: s.data.map(value => formatDecimal(value * (Math.random() * 5 + 1)))
+              }))} 
+              categories={lineChartData.categories} 
+            />
           </div>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Valor Total</h3>
-            <BarChart />
+            <BarChart 
+              data={barChartData.map(item => ({
+                ...item,
+                y: formatDecimal(item.y * (Math.random() * 5 + 1))
+              }))} 
+            />
           </div>
         </div>
       </Screen>
@@ -42,21 +76,37 @@ const PaginaInicialView = () => {
         <div style={styles.line}>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Quantidade por Produto</h3>
-            <LineChart />
+            <LineChart 
+              series={lineChartData.series} 
+              categories={lineChartData.categories} 
+            />
           </div>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Quantidade por Total</h3>
-            <BarChart />
+            <BarChart 
+              data={barChartData}
+            />
           </div>
         </div>
         <div style={styles.line}>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Valor por Produto</h3>
-            <LineChart />
+            <LineChart 
+              series={lineChartData.series.map(s => ({
+                ...s,
+                data: s.data.map(value => formatDecimal(value * (Math.random() * 5 + 1)))
+              }))} 
+              categories={lineChartData.categories}
+            />
           </div>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Valor Total</h3>
-            <BarChart />
+            <BarChart 
+              data={barChartData.map(item => ({
+                ...item,
+                y: formatDecimal(item.y * (Math.random() * 5 + 1))
+              }))} 
+            />
           </div>
         </div>
       </Screen>
@@ -65,21 +115,37 @@ const PaginaInicialView = () => {
         <div style={styles.line}>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Quantidade por Produto</h3>
-            <LineChart />
+            <LineChart 
+              series={lineChartData.series} 
+              categories={lineChartData.categories} 
+            />
           </div>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Quantidade Total</h3>
-            <BarChart />
+            <BarChart 
+              data={barChartData} 
+            />
           </div>
         </div>
         <div style={styles.line}>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Valor por Produto</h3>
-            <LineChart />
+            <LineChart 
+              series={lineChartData.series.map(s => ({
+                ...s,
+                data: s.data.map(value => formatDecimal(value * (Math.random() * 5 + 1)))
+              }))} 
+              categories={lineChartData.categories} 
+            />
           </div>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <h3 className="mb-0">Valor Total</h3>
-            <BarChart />
+            <BarChart 
+              data={barChartData.map(item => ({
+                ...item,
+                y: formatDecimal(item.y * (Math.random() * 5 + 1))
+              }))} 
+            />
           </div>
         </div>
       </Screen>
