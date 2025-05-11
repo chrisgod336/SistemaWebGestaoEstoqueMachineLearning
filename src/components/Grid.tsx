@@ -14,8 +14,8 @@ function BootstrapGrid({ newApp, data}: Props) {
 
   return (
     <div className="container mt-4">
-      <div className="d-flex align-items-center justify-content-between mb-4">
-        <Button variant="success" onClick={() => window.location.href = newApp}>
+      <div className="d-flex align-items-center justify-content-between mb-4" style={{display: newApp.length ? 'block' : 'none'}}>
+        <Button variant="success" onClick={() => window.location.href = newApp} style={{display: newApp.length ? 'block' : 'none'}}>
           <FontAwesomeIcon icon={faPlus} color='#ffff'/>
           {'  Novo'}
         </Button>
@@ -30,7 +30,7 @@ function BootstrapGrid({ newApp, data}: Props) {
             {columns.length > 0 && columns.map((col) => (
               <th key={col}>{col.charAt(0).toUpperCase() + col.slice(1)}</th>
             ))}
-            <th>Ações</th>
+            <th style={{display: newApp.length ? 'block' : 'none'}}>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@ function BootstrapGrid({ newApp, data}: Props) {
               {columns.length > 0 && columns.map((col) => (
                 <td key={col}>{row[col]}</td>
               ))}
-              <td>
+              <td style={{display: newApp.length ? 'block' : 'none'}}>
                 <Button variant="primary" onClick={() => window.location.href = newApp.replace('/novo', '')+'/'+row["Código"]}>
                   <FontAwesomeIcon icon={faEdit} color='#ffff'/>
                   {'  Editar'}

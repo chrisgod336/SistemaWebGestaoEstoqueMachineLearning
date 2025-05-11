@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import BootstrapNavBar from './components/NavBar';
 import PaginaInicialView from './view/PaginaInicial/PaginaInicialView';
+import RelatoirioView from './view/Relatorio/RelatorioView';
 
 import ClienteConsultaView from './view/Cliente/ClienteConsultaView';
 import ClienteFormularioView from './view/Cliente/ClienteFormularioView';
@@ -36,6 +37,7 @@ const AppContent = () => {
       <div className={semMenu ? '' : 'container mt-4'}>
         <Routes>
           <Route path="/" element={<PaginaInicialView />} />
+          <Route path="/Relatorio" element={<RelatoirioView />} />
 
           {/* Cliente */}
           <Route path="/clientes" element={<ClienteConsultaView />} />

@@ -24,9 +24,9 @@ interface ChartData {
   totalVr: { x: string; y: number }[];
 }
 
-export const getNexSixMonths = async (setCompra: any, setVenda: any, setEstoque: any) => {
+export const getNexSixMonths = async (setCompra: any, setVenda: any, setEstoque: any, limit: number) => {
   try {
-    const response = await api.get('/BI/getnextSixMonths');
+    const response = await api.get(limit ? `/BI/getnextSixMonths?limit=${limit}` : '/BI/getnextSixMonths');
 
     if (response?.data?.result !== 'success') {
       throw new Error(response?.data?.message ?? 'Erro ao tentar buscar os Dados');

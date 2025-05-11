@@ -35,18 +35,18 @@ const PaginaInicialView = () => {
   });
 
   useEffect(() => {
-    getNexSixMonths(setCompra, setVenda, setEstoque);
+    getNexSixMonths(setCompra, setVenda, setEstoque, 10);
   }, []);
 
   return (
     <div style={styles.container}>
       <div style={styles.buttonContainer}>
+        <h1 className="mb-0">Dashboards (Top 10 produtos)</h1>
         <Button type="submit" variant="primary" onClick={() => alert("Recalculando")}>
           <FontAwesomeIcon icon={faRotate} color='#ffff'/>
           {'  Recalcular'}
         </Button>
       </div>
-
       <Screen title='Dashboard de Previsão de Demanda (Próximos 6 meses)' backButton={false}>
         <div style={styles.line}>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
@@ -158,7 +158,7 @@ const styles: { [key: string]: CSSProperties } = {
   },
   buttonContainer: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     marginBottom: '16px',
   },
   line: {
