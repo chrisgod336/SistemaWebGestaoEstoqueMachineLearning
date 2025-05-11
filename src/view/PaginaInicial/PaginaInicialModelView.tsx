@@ -33,7 +33,7 @@ export const getNexSixMonths = async (setCompra: any, setVenda: any, setEstoque:
     }
 
     const data = response.data.data;
-    const meses:Array<any> = Array.from(new Set(data.compra.map((item: ProdutoData) => item.mesExt))).sort();
+    const meses:Array<any> = Array.from(new Set(data.compra.map((item: ProdutoData) => item.mesExt)));
 
     const processProdutos = (produtos: ProdutoData[]) => {
       const produtosUnicos = Array.from(new Set(produtos.map(item => item.nome_produto)));
