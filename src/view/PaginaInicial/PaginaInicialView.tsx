@@ -42,10 +42,6 @@ const PaginaInicialView = () => {
     <div style={styles.container}>
       <div style={styles.buttonContainer}>
         <h1 className="mb-0">Dashboards (Top 10 produtos)</h1>
-        <Button type="submit" variant="primary" onClick={() => alert("Recalculando")}>
-          <FontAwesomeIcon icon={faRotate} color='#ffff'/>
-          {'  Recalcular'}
-        </Button>
       </div>
       <Screen title='Dashboard de Previsão de Demanda (Próximos 6 meses)' backButton={false}>
         <div style={styles.line}>
