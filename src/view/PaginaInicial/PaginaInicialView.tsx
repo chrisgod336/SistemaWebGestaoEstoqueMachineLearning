@@ -1,9 +1,6 @@
 import { CSSProperties, useState, useEffect } from 'react';
 import Screen from '../../components/Screen';
 import { LineChart, BarChart } from '../../components/Chart';
-import { Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRotate } from '@fortawesome/free-solid-svg-icons';
 
 import { getNexSixMonths } from './PaginaInicialModelView';
 

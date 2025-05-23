@@ -3,6 +3,14 @@ import { maskDinheiro } from "../../utils/Mask";
 
 export const getNexSixMonths = async (setCompra: any, setVenda: any, setEstoque: any, limit: number) => {
   try {
+    //Recarrega dados
+    const res = await api.post(`/BI/calculateNextSixMonths`);
+
+    if(!res){
+      console.error('Erro ao tentar recalcular os dados!');
+    }
+
+    //Buscar os dados
     const response = await api.get(limit ? `/BI/getnextSixMonths?limit=${limit}` : '/BI/getnextSixMonths');
 
     if (response?.data?.result !== 'success') {

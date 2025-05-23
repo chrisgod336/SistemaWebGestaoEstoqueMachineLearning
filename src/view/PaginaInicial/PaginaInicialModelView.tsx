@@ -26,6 +26,14 @@ interface ChartData {
 
 export const getNexSixMonths = async (setCompra: any, setVenda: any, setEstoque: any, limit: number) => {
   try {
+    //Recarrega dados
+    const res = await api.post(`/BI/calculateNextSixMonths`);
+
+    if(!res){
+      console.error('Erro ao tentar recalcular os dados!');
+    }
+
+    //Busca os dados
     const response = await api.get(limit ? `/BI/getnextSixMonths?limit=${limit}` : '/BI/getnextSixMonths');
 
     if (response?.data?.result !== 'success') {
@@ -101,6 +109,10 @@ export const getNexSixMonths = async (setCompra: any, setVenda: any, setEstoque:
       categoriesVr: meses,
       totalVr: processTotais(data.total_estoque, 'vr_total')
     };
+
+    console.log('Compra: ', compra);
+    console.log('Venda: ', estoque);
+    console.log('Estoque: ', estoque);
 
     setCompra(compra);
     setVenda(venda);
