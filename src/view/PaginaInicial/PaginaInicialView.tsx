@@ -91,14 +91,14 @@ const PaginaInicialView = () => {
         </div>
         <div style={styles.line}>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
-            <h3 className="mb-0">Valor por Produto</h3>
+            <h3 className="mb-0">Saldo por Produto</h3>
             <LineChart 
               series={estoque.seriesVr} 
               categories={estoque.categoriesVr}
             />
           </div>
           <div style={{width: '50%', padding:20, borderRadius: 10, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
-            <h3 className="mb-0">Valor Total</h3>
+            <h3 className="mb-0">Saldo Total</h3>
             <BarChart 
               data={estoque.totalVr} 
             />
